@@ -1,12 +1,12 @@
 import bs4 as bs
 import urllib.request
 import  csv
+global link
+link='https://oxu.az/politics'
 
 
-
-def find_news_links():
+def find_news_links(link):
     links=[]
-    link='https://oxu.az/politics'
     source = urllib.request.urlopen(link).read()
     soup = bs.BeautifulSoup(source, 'lxml')
     data=soup.prettify()
@@ -18,11 +18,11 @@ def find_news_links():
     return links,pagination_link
 
 def scrape_news_content():
-    with open('data.csv','w',encoding="utf8") as file:
+    with open('data.csv','a',encoding="utf8") as file:
         writer=csv.writer(file)
 
-
-        links=find_news_links()
+         
+        links=find_news_links(link)[0]
         for i in links:
             source=urllib.request.urlopen('https://oxu.az'+i).read()
             soup=bs.BeautifulSoup(source,'lxml')
@@ -32,7 +32,14 @@ def scrape_news_content():
 
 
 
+global i
+i=0
+while i<3:
+    scrape_news_content()
+    link='https://oxu.az'+find_news_links(link)[1]
+    i=i+1
 
-
-print(find_news_links()[1])
-#scrape_news_content()
+#given link find links
+#scrape news
+#update link to pagination link
+#repeat'''
