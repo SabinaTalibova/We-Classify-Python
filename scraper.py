@@ -2,6 +2,7 @@ import bs4 as bs
 import urllib.request
 import  csv
 
+
 source = urllib.request.urlopen('https://oxu.az/politics').read()
 
 
