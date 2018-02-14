@@ -7,7 +7,7 @@ source = urllib.request.urlopen('https://oxu.az/politics').read()
 
 
 #soup = bs.BeautifulSoup(source,'lxml')
-soup = bs.BeautifulSoup(source.decode('utf-8','ignore'), 'lxml')
+soup = bs.BeautifulSoup(source, 'lxml')
 
 data=soup.prettify()
 
@@ -30,8 +30,12 @@ with open('onehot.csv','w',encoding="utf8") as testfile:
         source = urllib.request.urlopen('https://oxu.az'+l).read()
         soup = bs.BeautifulSoup(source,'lxml')
         data=soup.prettify()
-        news=soup.find('div', {"class":"news-inner"}).text.encode('UTF-8')
+        news=soup.find('div', {"class":"news-inner"}).text#.encode('UTF8')
+
         csv_writer.writerow([news])
+
+        
+        #print(news)
 
 
   
