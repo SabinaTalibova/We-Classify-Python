@@ -9,7 +9,7 @@ def find_news_links(link):
     links=[]
     source = urllib.request.urlopen(link).read()
     soup = bs.BeautifulSoup(source, 'lxml')
-    data=soup.prettify()
+    #data=soup.prettify()
     next_page=soup.find('a',{"class":"more"})
     pagination_link=next_page.get('href')
     for link in soup.find_all('a', {"class":"news-i-inner"}):
@@ -26,20 +26,19 @@ def scrape_news_content():
         for i in links:
             source=urllib.request.urlopen('https://oxu.az'+i).read()
             soup=bs.BeautifulSoup(source,'lxml')
-            data=soup.prettify()
+            #data=soup.prettify()
             news_text=soup.find('div',{"class": "news-inner"}).text
+            #label='siyast'
+            #writer.writerow(zip([news_text],[label]))
             writer.writerow([news_text])
+
 
 
 
 global i
 i=0
-while i<3:
+while i<60:
     scrape_news_content()
     link='https://oxu.az'+find_news_links(link)[1]
     i=i+1
-
-#given link find links
-#scrape news
-#update link to pagination link
-#repeat'''
+print(i)
