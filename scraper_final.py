@@ -2,7 +2,7 @@ import bs4 as bs
 import urllib.request
 import  csv
 global link
-link='https://oxu.az/politics'
+link='https://oxu.az/economy'
 
 
 def find_news_links(link):
@@ -37,7 +37,7 @@ def scrape_news_content():
 
 global i
 i=0
-while i<60:
+while i<200:
     scrape_news_content()
     link='https://oxu.az'+find_news_links(link)[1]
     i=i+1
