@@ -8,7 +8,7 @@ import time
 
 global link
 
-link='https://oxu.az/turism'
+link='https://oxu.az/auto-moto'
 def find_news_links(link):
     links=[]
     req = urllib.request.Request(
@@ -31,7 +31,7 @@ def find_news_links(link):
         links.append(l)
     return links,pagination_link
 def scrape_news_content():
-    with open('turism.csv','a',encoding="utf8") as file:
+    with open('automoto.csv','a',encoding="utf8") as file:
         writer=csv.writer(file)
         links=find_news_links(link)[0]
         for i in links:
@@ -51,14 +51,17 @@ def scrape_news_content():
             #label='siyast'
             #writer.writerow(zip([news_text],[label]))
             writer.writerow([news_text])
-            time.sleep(3)
+            time.sleep(4)
 global i
 i=0
 while i<200:
-    link='https://oxu.az'+find_news_links(link)[1]
-    scrape_news_content()
-    i=i+1
-    time.sleep(3)
-    print(i)
+    try:
+        link='https://oxu.az'+find_news_links(link)[1]
+        scrape_news_content()
+        i=i+1
+        time.sleep(4)
+        print(i)
+    except:
+        print("I will survive")
   
 
