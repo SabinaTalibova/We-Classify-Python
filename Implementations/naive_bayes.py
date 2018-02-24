@@ -38,7 +38,7 @@ def extract_features(sentenece):
 
 def featurelistAndArray():
     featureList=[]
-    inputsenteneces=csv.reader(open('train.csv','r',encoding="utf8"))
+    inputsenteneces=csv.reader(open('Data/train.csv','r',encoding="utf8"))
 
 
     senteneces=[]
@@ -121,7 +121,7 @@ def show():
 
 '''def accuracychecker():
 	counter=0
-	inputTest=csv.reader(open('TestData.csv','r'))
+	inputTest=csv.reader(open('Data/test.csv','r'))
 	for row in inputTest:
 		sentenece=row[0]
 		sentiment=row[1]
