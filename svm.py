@@ -63,4 +63,3 @@ predicted = text_clf.predict(docs_test)
 
 print(np.mean(predicted == test_data.label.astype('U')) )           
 
-
