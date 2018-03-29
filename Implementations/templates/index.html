@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <h1>We will Classify</h1>
+    <h1>We Classify</h1>
     <form action="/predict" method="post" enctype="multipart/form-data">
-     <input type="file" name="image" value="Upload">
+    <textarea name="text" rows="10" cols="70" value= "{{request.form['text']}}"></textarea>
      <input type="submit" value="Predict"> {% if label %} {{ label }} {% endif %}
 </form>
-
 
 
 
