@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 from sklearn.utils import shuffle
 from sklearn.externals import joblib
+from sklearn.svm import SVC
 
 data_old=pd.read_csv('../Data/all_data.csv')
 shuffled = shuffle(data_old)
@@ -54,17 +55,21 @@ text_clf = Pipeline([('vect', CountVectorizer()),
                                            alpha=1e-3, 
                                            max_iter=5, tol=None)),
 ])
+text_clf = SVC(probability=True)
+
 text_clf.fit(x.values.astype('U'), y.values.astype('U'))
 
 docs_test=test_data.news.values.astype('U')
 predicted = text_clf.predict(docs_test)
+predicted_probab=text_clf.predict_proba(docs_test)
 print (predicted)
+print(predicted_probab)
 
 
 
-print(np.mean(predicted == test_data.label.astype('U')) )    
+#print(np.mean(predicted == test_data.label.astype('U')) )    
 
 
-joblib.dump(text_clf, 'svm.pkl')       
+#joblib.dump(text_clf, 'svm.pkl')       
 
 
