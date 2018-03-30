@@ -10,16 +10,25 @@ import numpy as np
 from sklearn.utils import shuffle
 from sklearn.externals import joblib
 from sklearn.svm import SVC
+import csv 
+import string
+from skmultilearn.problem_trasnform import BinaryRelevance
 
 data_old=pd.read_csv('../Data/all_data.csv')
+#data_old.replace(r)
 shuffled = shuffle(data_old)
 shuffled.to_csv('newfile.csv', index=False)
+
 data=pd.read_csv('newfile.csv')
+
+
 
 
 
 train_data = data[:int((len(data)+1)*.80)] #Remaining 80% to training set
 test_data = data[int(len(data)*.80+1):] #Splits 20% data to test se
+
+
 
 
 
@@ -48,6 +57,7 @@ tfidf_transformer = TfidfTransformer()
 X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)
 X_train_tfidf.shape
 
+#text_clf = SVC(probability=True)
 																												
 text_clf = Pipeline([('vect', CountVectorizer()),
                      ('tfidf', TfidfTransformer()),
@@ -55,7 +65,6 @@ text_clf = Pipeline([('vect', CountVectorizer()),
                                            alpha=1e-3, 
                                            max_iter=5, tol=None)),
 ])
-text_clf = SVC(probability=True)
 
 text_clf.fit(x.values.astype('U'), y.values.astype('U'))
 
@@ -63,7 +72,7 @@ docs_test=test_data.news.values.astype('U')
 predicted = text_clf.predict(docs_test)
 predicted_probab=text_clf.predict_proba(docs_test)
 print (predicted)
-print(predicted_probab)
+#print(predicted_probab)
 
 
 
