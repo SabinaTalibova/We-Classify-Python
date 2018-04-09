@@ -1,17 +1,219 @@
-<html>
-  <head>
-    <title>SVHN Model as a Flask API</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
-    <h1>We Classify</h1>
-    <form action="/predict" method="post" enctype="multipart/form-data">
-    <textarea name="text" rows="10" cols="70" value= "{{request.form['text']}}"></textarea>
-     <input type="submit" value="Predict"> {% if label %} {{ label }} {% endif %}
-</form>
-
-
-
-  </body>
 </html>
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+
+@import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+@import url('https://fonts.googleapis.com/css?family=Lobster+Two'); 
+
+
+body {
+  font-family: Arial;
+  
+
+}
+*{
+   padding: 0;
+   margin: 0;
+   border:0;
+
+}
+header{
+  border-bottom: solid 1px grey;
+  height: 55px;
+}
+h3 {
+  margin-top: 40px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    margin-right: 100px;
+}
+
+li {
+    float:right;
+}
+
+li a {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 26px;
+    text-decoration: none;
+}
+li h1 {
+  float: left;
+}
+
+li a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+li a.active {
+    color: white;
+    background-color: #4CAF50;
+}
+.logo{
+    float: left;
+    color: green;
+    margin-top: 5px;
+    margin-left:  30px;
+    width: 200px;
+    height: 60px;
+    font-size: 250%;
+    font-family: Lobster Two;
+
+
+    }
+#logo:hover{
+      color:#C3D7DF;
+    
+}
+
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+.opsi{
+  margin-top: 30px;
+  width: 600px;
+  margin-left: 70px;
+ 
+}
+.logo{
+
+  margin-left: 70px;
+}
+.about {
+  margin-left: 70px;
+  margin-top: 40px;
+  font-family: Slabo;
+  font-size: 20px;
+
+
+}
+.name{
+  padding-bottom: 5px; 
+  font-family: Slabo;
+  font-size: 27px;
+}
+.flag{
+  margin-left: 275px;
+    margin-top: -25px;
+
+}
+
+</style>
+</head>
+<body>
+<header>
+    <h1 class="logo" href="#home">weClassify</h1>
+
+<ul>
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#about">About</a></li>
+
+</ul>
+
+</header>
+<div class="about">
+  <h3 class="name">News Classifier</h3>
+
+  <p>This classifier categorizes news articles.<br>
+    It was trained with 1000 hand picked articles from major news sources per category.<br>
+The text used was a combination of each article's title, description <br>
+and scraped and cleaned text.</p>
+<p><b><i>Available Language: Azrebaijani</b></i></p>
+    <img  class="flag" src="flag.png">
+
+
+
+</div>
+
+
+<div class="opsi">
+<div class="tab">
+  <button class="tablinks" onclick="openAlgo(event, 'nb')" >Naive Bayes</button>
+  <button class="tablinks" onclick="openAlgo(event, 'svm')">Support Vector Machine</button>
+  <button class="tablinks" onclick="openAlgo(event, 'nn')">Neural Networks</button>
+
+</div>
+
+<form id="nb" class="tabcontent" action="/predict_nb" method="post" enctype="multipart/form-data">
+    <textarea name="text" rows="10" cols="80" placeholder="Enter the news content here..." value= "{{request.form['text']}}"></textarea>
+     <input type="submit" value="Predict"> {% if label %} {{ label }} {% endif %}</form>
+
+<form id="svm" class="tabcontent" action="/predict_svm" method="post" enctype="multipart/form-data">
+  <textarea placeholder="Enter the news content here..." name="text" rows="10" cols="80" value= "{{request.form['text']}}"></textarea>
+     <input type="submit" value="Predcit"> {% if label %} {{ label }} {% endif %}
+</form>
+<form id="nn" class="tabcontent" action="/predict_nb" method="post" enctype="multipart/form-data">
+    <textarea name="text" rows="10" cols="80" placeholder="Enter the news content here..." value= "{{request.form['text']}}"></textarea>
+     <input type="submit" value="Predict"> </form>
+
+</div>
+
+<script>
+function openAlgo(evt, algoname) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(algoname).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+     
+</body>
+</html> 
